@@ -1,0 +1,122 @@
+
+.chat-body {
+    height: 500px;
+    margin-top: 50px;
+    background-color: #292E34;
+}
+
+.chat-title {
+    color: #fff;
+    font-size: 16px;
+    margin: 0;
+    text-align: center;
+}
+.chat-info {
+    height: 30px;
+}
+.user-info {
+    display: none;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: center;
+    height: 150px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.user-icon {
+    display: block;
+    width: 70px;
+    height: 70px;
+    cursor: pointer;
+}
+
+.user-name {
+    color: #fff;
+    text-decoration: none;
+}
+.user-name:hover {
+    color: #fff;
+    text-decoration: underline;
+}
+.user-email {
+    color: #fff;
+    opacity: 0.4
+}
+.search-block {
+    height: 60px;
+    padding: 10px 15px;
+}
+.profile-link {
+    width: 40px;
+    height: 40px;
+    opacity: 0.7;
+    margin-right: 15px;
+    text-decoration: none;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+
+}
+.profile-link:hover {
+    opacity: 0.9;
+}
+.search-input {
+    width: 80%;
+    height: 40px;
+    padding-left: 10px;
+    background-color: #3D444C;
+    outline: none;
+    border: none;
+    border-radius: 10px;
+    color: #fff;
+}
+.friends-list {
+    height: 470px;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+.friend-item {
+    height: 60px;
+    padding: 10px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: bold;
+    background-color: #292E34;
+    cursor: pointer;
+}
+.friend-item:hover {
+    background-color: #394048;
+}
+.friend-icon {
+    max-width: 40px;
+    margin-right: 10px;
+}
+.chat-user {
+    padding: 10px;
+}
+.chat-user-icon {
+    max-width: 40px;
+}
+.message-list {
+    width: 100%;
+}
+
+.message-item {
+    color: #fff;
+}
+.message-container {
+    height: 470px;
+    background-color: #13171A;
+}
+.message-window {
+    height: 100%;
+}
+.message-window.empty {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+}

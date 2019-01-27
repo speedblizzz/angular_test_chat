@@ -1,16 +1,106 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="app">
+<html lang="en" ng-app="chatApp">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 </head>
-<body>
-        <div class="message-container" >
+<body ng-controller="chatCtrl">
+    
+        <div class="container ">
+            <div class="chat-body">
+                    <div class="row no-gutters">
                 
-                <message-form></message-form>
-        </div>
+                            <div class="chat-info col-12 d-flex align-items-center justify-content-center">
+                                
+                                
+                                <h1 class="chat-title">
+                                    AngularJS Chat
+                                </h1>
+                            </div>
+                            
+                            <!-- <button type="button" class="btn btn-default" ng-click="openModal('sm','.modal-parent')">Open modal!</button> -->
+        
+                    </div>
+        
+        
+        
+                    <div class="row no-gutters">
+                  
+                            <div class=" col-12 col-md-3 ">
+                                <div class="search-block d-flex justify-content-space-between align-items-center">
+                                    <a href="#" class="profile-link" style="background-image: url('{{profileIcon}}');"></a>
+                                        <div class="user-info" >
+                                                <img src="{{user.iconUrl}}" alt="" class="user-icon" ng-click="showUserIcon()">
+                                                <a href="" class="user-name" ng-click="showUserProfile()">{{user.name}}</a>
+                                                <span class="user-email">{{user.email}}</span>
+                                        </div>
+                                    <input type="text" class="search-input" ng-model="searchFriendName" placeholder="Поиск...">
+                                </div>
+                                    <ul class="friends-list ">
+                                                <li class="friend-item d-flex" id="{{ friend.userId }}" ng-repeat="friend in friends | filter:{name:searchFriendName}" ng-click="setChatId(friend.chatId)">
+                                                    <img src="{{ friend.iconUrl }}" alt="" class="friend-icon">
+                                                    <span class="message-title">{{ friend.name }}</span>
+                                                </li>
+                                    </ul>
+                                </div>
+            
+                            
+                    
+                    <div class="message-container col-12 col-md-9" ng-switch on="isChatActive">
+                            <div class="message-window" ng-switch-when="true">
+                                <div class="chat-user" >
+                                        <div class="chat-user-icon-block">
+                                                <img src="{{activeUser.iconUrl}}" alt="" class="chat-user-icon" ng-click="showChatProfile()">
+                                            </div>
+                                                <div class="chat-user-info-block">
+                                                        <a href="" class="chat-user-name" ng-click="showChatProfile()">{{activeUser.name}}</a>
+                                                        <span class="chat-user-email">{{activeUser.email}}</span>
+                                                </div>
+                                        
+                                </div>
+                                <ul class="message-list" >
+                                    <li class="message-item" ng-repeat="message in messages | filter:{chatId:activeChatId}">
+                                        <span class="message-title">{{ message.user }}</span>
+                                        <p class="message-date"> {{ message.date | date:"dd/MM/yyyy 'в' HH:mm"}}</p>
+                                        <p class="message-content">{{ message.content }}</p>
+                                    </li>
+                                </ul> 
+                                <div class="message-form" >
+                                    <form ng-submit="sendMessage()" class="container">
+                                      <div class="row">
+                                        <div class="input-field">
+                                            <span>{{messageContent}}</span>
+                                          <input ng-model="messageContent" type="text" placeholder="Ваше сообщение" >
+                                        </div>
+                                        <div class="input-field">
+                                          <button type="submit" class="waves-effect waves-light btn-floating btn-large">Отправить</button>
+                                        </div>
+                                      </div>
+                                     </form>
+                                </div>
+                            </div>
+                                <div class="message-window empty" ng-switch-default>Please select chat to start messaging</div>
+                    </div>
+                </div>
+            </div>
+           
+    </div>
+    <div class="modal-parent"></div>
+    
+     
     <script src= "./main.js" ></script>
+    <script type="text/ng-template" id="modalContent.html">
+        <div class="modal-header">
+            <h3 class="modal-title" id="modal-title">I'm a modal!</h3>
+        </div>
+        <div class="modal-body" id="modal-body">
+            <p>Text</p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-warning" type="button" ng-click="$ctrl.cancel()">Cancel</button>
+        </div>
+    </script> 
 </body>
 </html>

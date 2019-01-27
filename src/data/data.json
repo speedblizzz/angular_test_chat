@@ -1,0 +1,70 @@
+{
+    "user": {
+        "id": 1,
+        "name": "Test User",
+        "email": "angularchat@test.com",
+        "iconUrl": ""
+    },
+    "friends": [
+        {
+            "userId": "5",
+            "chatId": "2",
+            "name": "John Smith",
+            "email": "john@test.ru",
+            "iconUrl" : ""
+            
+        },
+        {
+            "userId": "6",
+            "chatId": "3",
+            "name": "Ivan Ivanov",
+            "email": "ivan@test.ru",
+            "iconUrl" : ""
+        },
+        {
+            "userId": "7",
+            "chatId": "4",
+            "name": "Anna Petrova",
+            "email": "anna@test.ru",
+            "iconUrl" : ""
+        }
+    ],
+    "messages" : [
+        {
+            "chatId": "3",
+            "senderId": "6",
+            "date": "1548587912832",
+            "content": "Hey, man!"
+        },
+        {
+            "chatId": "4",
+            "senderId": "7",
+            "date": "1548587912832",
+            "content": "Hello!"
+        },
+        {
+            "chatId": "2",
+            "senderId": "5",
+            "date": "1548587912832",
+            "content": "Hey"
+        },
+        {
+            "chatId": "2",
+            "senderId": "1",
+            "date": "1548587912832",
+            "content": "What's up?"
+        },
+        {
+            "chatId": "3",
+            "senderId": "1",
+            "date": "1548587912832",
+            "content": "I'm good!"
+        },
+        {
+            "chatId": "4",
+            "senderId": "1",
+            "date": "1548587912832",
+            "content": "Sorry, I'm busy"
+        }
+    ]
+}

@@ -2,6 +2,11 @@ const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
+  mode: 'development',
+  devServer: {
+    contentBase: './dist'
+  },
+  devtool: 'inline-source-map',
   module: {
     rules: [
       {
@@ -12,17 +17,18 @@ module.exports = {
         }
       },
       {
-        test: /\.scss$/,
-        use: ExtractTextPlugin.extract(
-          {
-            fallback: 'style-loader',
-            use: ['css-loader', 'sass-loader']
-          })
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader']
+      },
+      {
+        test: /\.(png|svg|jpe?g|gif)$/,
+        use: [
+          'file-loader'
+        ]
       }
     ]
   },
-  plugins: [ 
-    new ExtractTextPlugin({filename: 'style.css'}),
+  plugins: [
     new HtmlWebpackPlugin({
       inject: false,
       hash: true,
