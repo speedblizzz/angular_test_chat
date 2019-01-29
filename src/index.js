@@ -21,8 +21,8 @@ import 'simplebar/dist/simplebar.css';
 
 
 angular.
-module('chatApp', ['ui.router','ui.bootstrap','ngSanitize','ngAnimate']).
-directive('scroll', function($timeout) {
+module('chatApp', ['ui.bootstrap','ngSanitize','ngAnimate']).
+directive('scroll',['$timeout', function($timeout) {
   return {
     restrict: 'A',
     link: function(scope, element, attr) {
@@ -34,13 +34,13 @@ directive('scroll', function($timeout) {
       });
     }
   }
-}).
+}]).
 factory('MessagesService',messagesService).
-controller('chatCtrl',function($scope, $http, $uibModal, $document, MessagesService, $timeout){
+controller('chatCtrl', ['$scope','$http','$uibModal','$document','MessagesService', function($scope, $http, $uibModal, $document, MessagesService){
 
     $scope.friends = friendsData.friends;
 
-    $http({method: 'GET', url: 'user.json'}).then(function(resp) {
+    $http({method: 'GET', url: '/data/user.json'}).then(function(resp) {
       $scope.user = resp.data;
       $scope.user.iconUrl = userIcon;
     });
@@ -102,15 +102,15 @@ controller('chatCtrl',function($scope, $http, $uibModal, $document, MessagesServ
       };
     
 
-}).
-controller('ModalInstanceCtrl', function ($uibModalInstance, user) {
+}]).
+controller('ModalInstanceCtrl',['$uibModalInstance','user', function ($uibModalInstance, user) {
     var $ctrl = this;
     $ctrl.user = user;
       
     $ctrl.cancel = function () {
       $uibModalInstance.dismiss('cancel');
     };
-});
+}]);
 
 
 

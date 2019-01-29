@@ -1,4 +1,4 @@
-
+MessageServiceFactory.$inject = ['$http'];
 import messagesData from '../data/messages.json';
  
 export default function MessageServiceFactory($http) {
