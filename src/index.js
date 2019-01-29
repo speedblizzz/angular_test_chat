@@ -6,13 +6,10 @@ import userIcon from './images/user_avatar.png';
 import friendIcon from './images/avatar3.png';
 
 
-/* import userData from './data/user.json';*/
 import friendsData from './data/friends.json'; 
 
 import messagesService from './services/messagesService';
 
-import routing from './index.config'
-import 'angular-ui-router';
 import 'angular-ui-bootstrap';
 import 'angular-animate';
 import 'angular-sanitize';
@@ -59,13 +56,6 @@ controller('chatCtrl',function($scope, $http, $uibModal, $document, MessagesServ
     $scope.isChatActive = false;
     $scope.activeChatId = ''
 
-
-    $scope.showUserProfile = function() {
-        console.log('show user profile');
-    }
-    $scope.showUserIcon = function(){
-        console.log('show user icon');
-    }
     $scope.setChat = function(chatId){
         if(!chatId || $scope.activeChatId == chatId)
             return;
@@ -84,7 +74,6 @@ controller('chatCtrl',function($scope, $http, $uibModal, $document, MessagesServ
     $scope.sendMessage = function(){
       MessagesService.sendMessage( $scope.messageContent.value, $scope.activeChatId, $scope.user );
       $scope.currentMessagesList = MessagesService.getMessages($scope.activeChatId);
-      console.log($scope.currentMessagesList);
       $scope.messageContent.value = '';
     }
 
