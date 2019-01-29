@@ -4,28 +4,52 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles/style.css';
 import userIcon from './images/user_avatar.png';
 import friendIcon from './images/avatar3.png';
-import profileIcon from './images/profile-icon.png';
 
 
-import serverData from './data/data.json';
-//import uirouter from 'angular-ui-router';
+/* import userData from './data/user.json';*/
+import friendsData from './data/friends.json'; 
+
+import messagesService from './services/messagesService';
+
+import routing from './index.config'
+import 'angular-ui-router';
 import 'angular-ui-bootstrap';
 import 'angular-animate';
 import 'angular-sanitize';
 
+import 'simplebar';
+import 'simplebar/dist/simplebar.css';
 
 
 
 
 angular.
-module('chatApp', ['ui.bootstrap','ngSanitize','ngAnimate']).
-controller('chatCtrl',function($scope,$uibModal, $log, $document){
+module('chatApp', ['ui.router','ui.bootstrap','ngSanitize','ngAnimate']).
+directive('scroll', function($timeout) {
+  return {
+    restrict: 'A',
+    link: function(scope, element, attr) {
+      scope.$watchCollection(attr.scroll, function(newVal) {
+        $timeout(function() {
+          var messagesCounter = scope.$parent.currentMessagesList.length;
+          element[0].SimpleBar.getScrollElement().scrollTop = element[0].scrollHeight*messagesCounter;
+        });
+      });
+    }
+  }
+}).
+factory('MessagesService',messagesService).
+controller('chatCtrl',function($scope, $http, $uibModal, $document, MessagesService, $timeout){
 
-    $scope.friends = serverData.friends;
-    $scope.user = serverData.user;
+    $scope.friends = friendsData.friends;
 
-    $scope.user.iconUrl = userIcon;
-    $scope.profileIcon = profileIcon;
+    $http({method: 'GET', url: 'user.json'}).then(function(resp) {
+      $scope.user = resp.data;
+      $scope.user.iconUrl = userIcon;
+    });
+
+
+    
 
     $scope.friends.map((friend, index) => {
         friend.iconUrl = friendIcon
@@ -35,8 +59,6 @@ controller('chatCtrl',function($scope,$uibModal, $log, $document){
     $scope.isChatActive = false;
     $scope.activeChatId = ''
 
-    $scope.messages = serverData.messages;
-    $scope.messageContent = '';
 
     $scope.showUserProfile = function() {
         console.log('show user profile');
@@ -44,37 +66,29 @@ controller('chatCtrl',function($scope,$uibModal, $log, $document){
     $scope.showUserIcon = function(){
         console.log('show user icon');
     }
-    $scope.setChatId = function(chatId){
-        if(!chatId)
+    $scope.setChat = function(chatId){
+        if(!chatId || $scope.activeChatId == chatId)
             return;
 
         $scope.activeChatId = chatId;
         $scope.isChatActive = true;
-        $scope.friends.map(function(friend){
-            if(friend.chatId == chatId) {
-                $scope.activeUser = friend;
-            }
-        });
-    }
-
-    $scope.sendMessage = function(){
-
-        console.log($scope.messageContent);
-        if ($scope.messageContent.length == 0 || $scope.messageContent === "")
-            return;
-        var newMessage = {
-            chatId: $scope.activeChatId,
-            senderId: $scope.user.id,
-            user: $scope.user.name,
-            content: $scope.messageContent,
-            date: Date.now()
-        };
         
-        $scope.messages.push(newMessage);
-        $scope.messageContent = '';
+        $scope.currentChatUser = $scope.friends.find(friend => friend.chatId == chatId);
+        $scope.currentMessagesList = MessagesService.getMessages(chatId);
+        
+        $scope.messageContent.value = '';
+        
+       
+    }
+    $scope.messageContent = {value:''};
+    $scope.sendMessage = function(){
+      MessagesService.sendMessage( $scope.messageContent.value, $scope.activeChatId, $scope.user );
+      $scope.currentMessagesList = MessagesService.getMessages($scope.activeChatId);
+      console.log($scope.currentMessagesList);
+      $scope.messageContent.value = '';
     }
 
-    $scope.openModal = function (size, parentSelector) {
+    $scope.openUserModal = function (size, parentSelector, userId) {
         var parentElem = parentSelector ? 
           angular.element($document[0].querySelector(parentSelector)) : undefined;
         var modalInstance = $uibModal.open({
@@ -87,36 +101,27 @@ controller('chatCtrl',function($scope,$uibModal, $log, $document){
           size: size,
           appendTo: parentElem,
           resolve: {
-            items: function () {
-              /* return $ctrl.items; */
+            user: function () {
+              if($scope.user.id == userId)
+                return $scope.user;
+               
+              return $scope.friends.find((friend) => friend.userId == userId); 
             }
           }
         });
     
-        modalInstance.result.then(function (selectedItem) {
-         /*  $ctrl.selected = selectedItem; */
-        }, function () {
-          /* $log.info('Modal dismissed at: ' + new Date()); */
-        });
       };
     
 
 }).
-controller('ModalInstanceCtrl', function ($uibModalInstance, items) {
+controller('ModalInstanceCtrl', function ($uibModalInstance, user) {
     var $ctrl = this;
-    /* $ctrl.items = items;
-    $ctrl.selected = {
-      item: $ctrl.items[0]
-    }; */
-  
-    $ctrl.ok = function () {
-      $uibModalInstance.close($ctrl.selected.item);
-    };
-  
+    $ctrl.user = user;
+      
     $ctrl.cancel = function () {
       $uibModalInstance.dismiss('cancel');
     };
-  });;
+});
 
 
 

@@ -1,10 +1,20 @@
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 module.exports = {
   mode: 'development',
   devServer: {
-    contentBase: './dist'
+    contentBase: './dist',
+    host: '192.168.0.101',
+    port: 8000,
+    proxy: {
+      '/api/**': {
+        target: '192.168.0.101:8000',
+        secure: false,
+        changeOrigin: true,
+      }
+    },
   },
   devtool: 'inline-source-map',
   module: {
@@ -34,7 +44,12 @@ module.exports = {
       hash: true,
       template: './src/index.html',
       filename: 'index.html'
-    })
-    
+    }),
+    new CopyWebpackPlugin([
+      {
+        from: 'src/data',
+        to: 'data'
+      }
+    ])
   ]
 };

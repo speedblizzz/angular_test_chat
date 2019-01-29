@@ -1,69 +1,68 @@
 {
-    "user": {
-        "id": 1,
-        "name": "Test User",
-        "email": "angularchat@test.com",
-        "iconUrl": ""
-    },
-    "friends": [
-        {
-            "userId": "5",
-            "chatId": "2",
-            "name": "John Smith",
-            "email": "john@test.ru",
-            "iconUrl" : ""
-            
-        },
-        {
-            "userId": "6",
-            "chatId": "3",
-            "name": "Ivan Ivanov",
-            "email": "ivan@test.ru",
-            "iconUrl" : ""
-        },
-        {
-            "userId": "7",
-            "chatId": "4",
-            "name": "Anna Petrova",
-            "email": "anna@test.ru",
-            "iconUrl" : ""
-        }
-    ],
     "messages" : [
         {
+            "id": "1",
             "chatId": "3",
             "senderId": "6",
             "date": "1548587912832",
+            "status": "sended",
             "content": "Hey, man!"
         },
         {
+            "id": "2",
             "chatId": "4",
             "senderId": "7",
             "date": "1548587912832",
+            "status": "sended",
             "content": "Hello!"
         },
         {
+            "id": "3",
             "chatId": "2",
             "senderId": "5",
-            "date": "1548587912832",
+            "date": "1548587912810",
+            "status": "sended",
             "content": "Hey"
+        }
+,
+        {
+            "id": "3",
+            "chatId": "2",
+            "senderId": "5",
+            "date": "1548587912830",
+            "status": "sended",
+            "content": "How are you?"
         },
         {
+            "id": "4",
             "chatId": "2",
             "senderId": "1",
             "date": "1548587912832",
-            "content": "What's up?"
-        },
-        {
-            "chatId": "3",
-            "senderId": "1",
-            "date": "1548587912832",
+            "status": "sended",
             "content": "I'm good!"
         },
         {
+            "id": "4",
+            "chatId": "2",
+            "senderId": "1",
+            "date": "1548587912820",
+            "status": "sended",
+            "content": "What's up?"
+        },
+        {
+            "id": "5",
+            "chatId": "3",
+            "senderId": "1",
+            "date": "1548587912832",
+            "status": "sended",
+            "content": "I'm good!"
+        },
+        {
+            "id": "6",
             "chatId": "4",
             "senderId": "1",
             "date": "1548587912832",
+            "status": "sended",
             "content": "Sorry, I'm busy"
         }
     ]
